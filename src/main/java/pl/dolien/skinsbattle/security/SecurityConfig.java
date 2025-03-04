@@ -27,6 +27,8 @@ public class SecurityConfig {
     private String angularUrl;
 
     private static final String[] PERMITTED_URLS = {
+            "/rooms/**",
+            "/players/**",
             "/auth/**",
             "/v3/api-docs",
             "/v3/api-docs/**",
