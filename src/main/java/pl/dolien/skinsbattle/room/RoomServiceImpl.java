@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import pl.dolien.skinsbattle.exception.RoomNotFoundException;
 import pl.dolien.skinsbattle.player.Player;
 import pl.dolien.skinsbattle.player.PlayerMapper;
-import pl.dolien.skinsbattle.player.PlayerRepository;
+import pl.dolien.skinsbattle.player.PlayerService;
 import pl.dolien.skinsbattle.player.dto.PlayerResponse;
 import pl.dolien.skinsbattle.room.dto.RoomRequest;
 import pl.dolien.skinsbattle.room.dto.RoomResponse;
@@ -22,7 +22,7 @@ import static pl.dolien.skinsbattle.room.RoomMapper.*;
 public class RoomServiceImpl implements RoomService {
 
     private final RoomRepository roomRepository;
-    private final PlayerRepository playerRepository;
+    private final PlayerService playerService;
     private final SimpMessagingTemplate messagingTemplate;
 
     public List<RoomResponse> getAllRooms() {
@@ -43,7 +43,7 @@ public class RoomServiceImpl implements RoomService {
     @Transactional
     public boolean joinRoom(Long roomId, Long playerId) {
         Room room = getRoomEntityById(roomId);
-        Player player = getPlayerEntityById(playerId);
+        Player player = playerService.getPlayerEntityById(playerId);
 
         leaveCurrentRoomIfExists(player);
 
@@ -57,7 +57,7 @@ public class RoomServiceImpl implements RoomService {
     @Transactional
     public boolean leaveRoom(Long roomId, Long playerId) {
         Room room = getRoomEntityById(roomId);
-        Player player = getPlayerEntityById(playerId);
+        Player player = playerService.getPlayerEntityById(playerId);
 
         room.removePlayer(player);
         roomRepository.save(room);
@@ -76,11 +76,6 @@ public class RoomServiceImpl implements RoomService {
     private Room getRoomEntityById(Long roomId) {
         return roomRepository.findById(roomId)
                 .orElseThrow(() -> new RoomNotFoundException("Room not found"));
-    }
-
-    private Player getPlayerEntityById(Long playerId) {
-        return playerRepository.findById(playerId)
-                .orElseThrow(() -> new IllegalArgumentException("Player not found"));
     }
 
     private void leaveCurrentRoomIfExists(Player player) {

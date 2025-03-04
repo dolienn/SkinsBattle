@@ -26,6 +26,11 @@ public class PlayerServiceImpl implements PlayerService {
         ));
     }
 
+    public Player getPlayerEntityById(Long id) {
+        return playerRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Player not found"));
+    }
+
     public PlayerResponse createPlayer(PlayerRequest request) {
         return toPlayerResponse(playerRepository.save(toPlayer(request)));
     }

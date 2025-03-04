@@ -9,6 +9,7 @@ public interface PlayerService {
 
     List<PlayerResponse> getAllPlayers();
     PlayerResponse getPlayerById(Long id);
+    Player getPlayerEntityById(Long id);
     PlayerResponse createPlayer(PlayerRequest request);
     void deletePlayer(Long id);
 }
