@@ -10,5 +10,5 @@ import lombok.*;
 public class PlayerResponse {
 
     private String username;
-    private Long roomId;
+    private String roomId;
 }

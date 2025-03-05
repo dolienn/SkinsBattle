@@ -7,7 +7,7 @@ import pl.dolien.skinsbattle.player.Player;
 import java.util.HashSet;
 import java.util.Set;
 
-import static jakarta.persistence.GenerationType.IDENTITY;
+import static jakarta.persistence.GenerationType.UUID;
 
 @Entity
 @Getter
@@ -17,8 +17,8 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Builder
 public class Room {
     @Id
-    @GeneratedValue(strategy = IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = UUID)
+    private String id;
 
     private String name;
 

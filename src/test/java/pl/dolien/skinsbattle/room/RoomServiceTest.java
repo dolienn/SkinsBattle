@@ -24,6 +24,9 @@ import static org.mockito.Mockito.*;
 
 class RoomServiceTest {
 
+    private static final String ROOM_ID = "1";
+    private static final String PLAYER_ID = "1";
+
     @InjectMocks
     private RoomServiceImpl roomService;
 
@@ -61,25 +64,25 @@ class RoomServiceTest {
 
     @Test
     void shouldReturnRoomById() {
-        when(roomRepository.findById(1L)).thenReturn(of(room));
+        when(roomRepository.findById(ROOM_ID)).thenReturn(of(room));
 
-        RoomResponse response = roomService.getRoomById(1L);
+        RoomResponse response = roomService.getRoomById(ROOM_ID);
 
         assertEquals(roomResponse.getName(), response.getName());
-        verify(roomRepository, times(1)).findById(1L);
+        verify(roomRepository, times(1)).findById(ROOM_ID);
     }
 
     @Test
     void shouldThrowRoomNotFoundException() {
-        when(roomRepository.findById(1L)).thenReturn(empty());
+        when(roomRepository.findById(ROOM_ID)).thenReturn(empty());
 
         RoomNotFoundException exception = assertThrows(
                 RoomNotFoundException.class,
-                () -> roomService.getRoomById(1L)
+                () -> roomService.getRoomById(ROOM_ID)
         );
 
         assertEquals("Room not found", exception.getMessage());
-        verify(roomRepository, times(1)).findById(1L);
+        verify(roomRepository, times(1)).findById(ROOM_ID);
     }
 
     @Test
@@ -94,49 +97,49 @@ class RoomServiceTest {
 
     @Test
     void shouldJoinRoom() {
-        when(roomRepository.findById(1L)).thenReturn(of(room));
-        when(playerService.getPlayerEntityById(1L)).thenReturn(player);
+        when(roomRepository.findById(ROOM_ID)).thenReturn(of(room));
+        when(playerService.getPlayerEntityById(PLAYER_ID)).thenReturn(player);
 
-        boolean result = roomService.joinRoom(1L, 1L);
+        boolean result = roomService.joinRoom(ROOM_ID, PLAYER_ID);
 
         assertTrue(result);
         assertEquals(1, room.getPlayers().size());
-        verify(roomRepository, times(4)).findById(1L);
-        verify(playerService, times(2)).getPlayerEntityById(1L);
+        verify(roomRepository, times(4)).findById(ROOM_ID);
+        verify(playerService, times(2)).getPlayerEntityById(PLAYER_ID);
     }
 
     @Test
     void shouldLeaveRoom() {
-        when(roomRepository.findById(1L)).thenReturn(of(room));
-        when(playerService.getPlayerEntityById(1L)).thenReturn(player);
+        when(roomRepository.findById(ROOM_ID)).thenReturn(of(room));
+        when(playerService.getPlayerEntityById(PLAYER_ID)).thenReturn(player);
 
-        boolean result = roomService.leaveRoom(1L, 1L);
+        boolean result = roomService.leaveRoom(ROOM_ID, PLAYER_ID);
 
         assertTrue(result);
         assertEquals(0, room.getPlayers().size());
-        verify(roomRepository, times(2)).findById(1L);
-        verify(playerService, times(1)).getPlayerEntityById(1L);
+        verify(roomRepository, times(2)).findById(ROOM_ID);
+        verify(playerService, times(1)).getPlayerEntityById(PLAYER_ID);
     }
 
     @Test
     void shouldReturnPlayersInRoom() {
-        when(roomRepository.findById(1L)).thenReturn(of(room));
+        when(roomRepository.findById(ROOM_ID)).thenReturn(of(room));
 
-        List<PlayerResponse> players = roomService.getPlayersInRoom(1L);
+        List<PlayerResponse> players = roomService.getPlayersInRoom(ROOM_ID);
 
         assertEquals(1, players.size());
-        verify(roomRepository, times(1)).findById(1L);
+        verify(roomRepository, times(1)).findById(ROOM_ID);
     }
 
     private void initData() {
         player = Player.builder()
-                .id(1L)
+                .id(PLAYER_ID)
                 .username("testPlayer")
-                .roomId(1L)
+                .roomId(ROOM_ID)
                 .build();
 
         room = Room.builder()
-                .id(1L)
+                .id(ROOM_ID)
                 .name("testRoom")
                 .players(new HashSet<>(List.of(player)))
                 .build();

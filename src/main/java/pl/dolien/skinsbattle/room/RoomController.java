@@ -21,7 +21,7 @@ public class RoomController {
     }
 
     @GetMapping("/{id}")
-    public RoomResponse getRoomById(@PathVariable Long id) {
+    public RoomResponse getRoomById(@PathVariable String id) {
         return roomServiceImpl.getRoomById(id);
     }
 
@@ -31,17 +31,17 @@ public class RoomController {
     }
 
     @PostMapping("/{roomId}/join/{playerId}")
-    public boolean joinRoom(@PathVariable Long roomId, @PathVariable Long playerId) {
+    public boolean joinRoom(@PathVariable String roomId, @PathVariable String playerId) {
         return roomServiceImpl.joinRoom(roomId, playerId);
     }
 
     @PostMapping("/{roomId}/leave/{playerId}")
-    public boolean leaveRoom(@PathVariable Long roomId, @PathVariable Long playerId) {
+    public boolean leaveRoom(@PathVariable String roomId, @PathVariable String playerId) {
         return roomServiceImpl.leaveRoom(roomId, playerId);
     }
 
     @GetMapping("/{roomId}/players")
-    public List<PlayerResponse> getPlayersInRoom(@PathVariable Long roomId) {
+    public List<PlayerResponse> getPlayersInRoom(@PathVariable String roomId) {
         return roomServiceImpl.getPlayersInRoom(roomId);
     }
 }

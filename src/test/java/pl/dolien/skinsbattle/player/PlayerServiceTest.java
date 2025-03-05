@@ -17,6 +17,8 @@ import static org.mockito.Mockito.*;
 
 class PlayerServiceTest {
 
+    private static final String PLAYER_ID = "1";
+
     @InjectMocks
     private PlayerServiceImpl playerService;
 
@@ -47,22 +49,22 @@ class PlayerServiceTest {
 
     @Test
     void shouldReturnPlayerById() {
-        when(playerRepository.findById(1L)).thenReturn(of(player));
+        when(playerRepository.findById(PLAYER_ID)).thenReturn(of(player));
 
-        PlayerResponse response = playerService.getPlayerById(1L);
+        PlayerResponse response = playerService.getPlayerById(PLAYER_ID);
 
         assertEquals(playerResponse.getUsername(), response.getUsername());
-        verify(playerRepository, times(1)).findById(1L);
+        verify(playerRepository, times(1)).findById(PLAYER_ID);
     }
 
     @Test
     void shouldReturnPlayerEntityById() {
-        when(playerRepository.findById(1L)).thenReturn(of(player));
+        when(playerRepository.findById(PLAYER_ID)).thenReturn(of(player));
 
-        Player response = playerService.getPlayerEntityById(1L);
+        Player response = playerService.getPlayerEntityById(PLAYER_ID);
 
         assertEquals(player.getId(), response.getId());
-        verify(playerRepository, times(1)).findById(1L);
+        verify(playerRepository, times(1)).findById(PLAYER_ID);
     }
 
     @Test
@@ -77,14 +79,14 @@ class PlayerServiceTest {
 
     @Test
     void shouldDeletePlayer() {
-        playerService.deletePlayer(1L);
+        playerService.deletePlayer(PLAYER_ID);
 
-        verify(playerRepository, times(1)).deleteById(1L);
+        verify(playerRepository, times(1)).deleteById(PLAYER_ID);
     }
 
     private void initData() {
         player = Player.builder()
-                .id(1L)
+                .id(PLAYER_ID)
                 .username("testPlayer")
                 .build();
 

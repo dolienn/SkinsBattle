@@ -29,7 +29,7 @@ public class RoomServiceImpl implements RoomService {
         return toRoomResponseList(roomRepository.findAll());
     }
 
-    public RoomResponse getRoomById(Long id) {
+    public RoomResponse getRoomById(String id) {
         return roomRepository.findById(id)
                 .map(RoomMapper::toRoomResponse)
                 .orElseThrow(() -> new RoomNotFoundException("Room not found"));
@@ -41,7 +41,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Transactional
-    public boolean joinRoom(Long roomId, Long playerId) {
+    public boolean joinRoom(String roomId, String playerId) {
         Room room = getRoomEntityById(roomId);
         Player player = playerService.getPlayerEntityById(playerId);
 
@@ -55,7 +55,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Transactional
-    public boolean leaveRoom(Long roomId, Long playerId) {
+    public boolean leaveRoom(String roomId, String playerId) {
         Room room = getRoomEntityById(roomId);
         Player player = playerService.getPlayerEntityById(playerId);
 
@@ -66,14 +66,14 @@ public class RoomServiceImpl implements RoomService {
         return true;
     }
 
-    public List<PlayerResponse> getPlayersInRoom(Long roomId) {
+    public List<PlayerResponse> getPlayersInRoom(String roomId) {
         Room room = getRoomEntityById(roomId);
         return room.getPlayers().stream()
                 .map(PlayerMapper::toPlayerResponse)
                 .toList();
     }
 
-    private Room getRoomEntityById(Long roomId) {
+    private Room getRoomEntityById(String roomId) {
         return roomRepository.findById(roomId)
                 .orElseThrow(() -> new RoomNotFoundException("Room not found"));
     }
@@ -84,7 +84,7 @@ public class RoomServiceImpl implements RoomService {
         }
     }
 
-    private void notifyRoomUpdate(Long roomId) {
+    private void notifyRoomUpdate(String roomId) {
         List<String> playerUsernames = roomRepository.findById(roomId)
                 .map(room -> room.getPlayers().stream()
                         .map(Player::getUsername)

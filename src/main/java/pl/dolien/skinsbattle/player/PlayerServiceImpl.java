@@ -20,13 +20,13 @@ public class PlayerServiceImpl implements PlayerService {
         return toPlayerResponseList(playerRepository.findAll());
     }
 
-    public PlayerResponse getPlayerById(Long id) {
+    public PlayerResponse getPlayerById(String id) {
         return toPlayerResponse(playerRepository.findById(id).orElseThrow(
                 () -> new PlayerNotFoundException("Player not found")
         ));
     }
 
-    public Player getPlayerEntityById(Long id) {
+    public Player getPlayerEntityById(String id) {
         return playerRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Player not found"));
     }
@@ -35,7 +35,7 @@ public class PlayerServiceImpl implements PlayerService {
         return toPlayerResponse(playerRepository.save(toPlayer(request)));
     }
 
-    public void deletePlayer(Long id) {
+    public void deletePlayer(String id) {
         playerRepository.deleteById(id);
     }
 }

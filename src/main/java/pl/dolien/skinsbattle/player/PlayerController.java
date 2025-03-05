@@ -20,7 +20,7 @@ public class PlayerController {
     }
 
     @GetMapping("/{id}")
-    public PlayerResponse getPlayerById(@PathVariable Long id) {
+    public PlayerResponse getPlayerById(@PathVariable String id) {
         return playerServiceImpl.getPlayerById(id);
     }
 
@@ -30,7 +30,7 @@ public class PlayerController {
     }
 
     @DeleteMapping("/{id}")
-    public void deletePlayer(@PathVariable Long id) {
+    public void deletePlayer(@PathVariable String id) {
         playerServiceImpl.deletePlayer(id);
     }
 }

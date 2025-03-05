@@ -4,7 +4,7 @@ package pl.dolien.skinsbattle.player;
 import jakarta.persistence.*;
 import lombok.*;
 
-import static jakarta.persistence.GenerationType.IDENTITY;
+import static jakarta.persistence.GenerationType.UUID;
 
 @Entity
 @Setter
@@ -14,8 +14,8 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Builder
 public class Player {
     @Id
-    @GeneratedValue(strategy = IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = UUID)
+    private String id;
     private String username;
-    private Long roomId;
+    private String roomId;
 }

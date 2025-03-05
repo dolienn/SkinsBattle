@@ -9,10 +9,10 @@ import java.util.List;
 public interface RoomService {
 
     List<RoomResponse> getAllRooms();
-    RoomResponse getRoomById(Long id);
+    RoomResponse getRoomById(String id);
     RoomResponse createRoom(RoomRequest request);
-    boolean joinRoom(Long roomId, Long playerId);
-    boolean leaveRoom(Long roomId, Long playerId);
-    List<PlayerResponse> getPlayersInRoom(Long roomId);
+    boolean joinRoom(String roomId, String playerId);
+    boolean leaveRoom(String roomId, String playerId);
+    List<PlayerResponse> getPlayersInRoom(String roomId);
 }
 

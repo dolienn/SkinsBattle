@@ -24,8 +24,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class RoomControllerTest {
 
-    private static final Long ROOM_ID = 1L;
-    private static final Long PLAYER_ID = 1L;
+    private static final String ROOM_ID = "1";
+    private static final String PLAYER_ID = "1";
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @InjectMocks
